@@ -147,8 +147,5 @@ resource "aws_lb_target_group_attachment" "instance2_attachment" {
   
 }
 
-output "loadbalancerdns" {
-    value = aws_lb.myLB.dns_name
-  
-}
+
 
