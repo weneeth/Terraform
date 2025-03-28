@@ -8,6 +8,10 @@ resource "aws_vpc" "myvpc" {
     }
 }
 
+# resource "aws_s3_bucket" "TFbucket" {
+#   bucket = "terraform-aws-vpc1"  
+# }
+
 resource "aws_subnet" "subnet1"{
     vpc_id = aws_vpc.myvpc.id 
     cidr_block = "10.0.1.0/24"

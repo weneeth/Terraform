@@ -3,7 +3,7 @@ output "loadbalancerdns" {
   
 }
 
-output "instance_public_ip1" {
+output "instance1_public_ip" {
     value = aws_instance.myInstance1.public_ip
   
 }
