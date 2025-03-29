@@ -8,6 +8,12 @@ resource "aws_vpc" "myvpc" {
     }
 }
 
+resource "aws_key_pair" "TF_key_pair" {
+    key_name = "my_TF_key_pair"
+    public_key =file("my_aws_key.pub")   #ssh-keygen -t rsa -b 4096 -f "(define you path here)"  to generate your key pair
+  
+}
+
 # resource "aws_s3_bucket" "TFbucket" {
 #   bucket = "terraform-aws-vpc1"  
 # }
@@ -77,7 +83,7 @@ resource "aws_security_group" "mySecGrp" {
 resource "aws_instance" "myInstance1" {
     ami = var.aws_ami
     instance_type = var.instance_type
-    key_name = var.key_name
+    key_name = aws_key_pair.TF_key_pair.key_name
     vpc_security_group_ids = [aws_security_group.mySecGrp.id]
     subnet_id = aws_subnet.subnet1.id
     user_data = filebase64("userdata1.sh")
@@ -90,7 +96,7 @@ resource "aws_instance" "myInstance1" {
 resource "aws_instance" "myInstance2" {
     ami = var.aws_ami
     instance_type = var.instance_type
-    key_name = var.key_name
+    key_name = aws_key_pair.TF_key_pair.key_name
     vpc_security_group_ids = [aws_security_group.mySecGrp.id]
     subnet_id = aws_subnet.subnet2.id
     user_data = filebase64("userdata2.sh")

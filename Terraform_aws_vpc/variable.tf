@@ -16,12 +16,12 @@ variable "instance_type" {
   
 }
 
-variable "key_name" {
-  description = "Key pair name"
-  type = string
+# variable "key_name" {
+#   description = "Key pair name"
+#   type = string
    
   
-}
+# }
 
 variable "load_balancer_type" {
   description = "Type of load balancer"
