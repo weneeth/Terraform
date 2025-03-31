@@ -82,8 +82,26 @@ resource "aws_instance" "EC2-1" {
     subnet_id = aws_subnet.subnet_VPC1.id
     key_name = aws_key_pair.TF_key_pair.key_name
     vpc_security_group_ids = [aws_security_group.SG_VPC1.id]
+    associate_public_ip_address = true
     tags = {
         name = "EC2-1"
+    }
+    depends_on = [aws_internet_gateway.IGW_VPC1]
+    connection {
+      type = "ssh"
+      user = "ec2-user"
+      host = self.public_ip
+      private_key = file("F:/Cloud-Practitioner-Udemy/Terraform/Terraform-AWS_VPC/VPC1_key")  # path to your private key file
+    }
+    provisioner "remote-exec" {
+        inline = [
+            "sudo yum update -y",
+            "sudo yum install -y httpd",
+            "sudo systemctl start httpd",
+            "sudo systemctl enable httpd",
+            "echo '<h1>Hello from EC2-1</h1>' | sudo tee /var/www/html/index.html"
+        ]
+      
     }
   
 }
